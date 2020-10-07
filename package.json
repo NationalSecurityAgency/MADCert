@@ -18,7 +18,7 @@
       "fs-extra": "^9.0.1",
       "lodash": "^4.17.11",
       "moment": "^2.27.0",
-      "node-forge": "^0.9.1",
+      "node-forge": "^0.10.0",
       "yargs": "^15.4.0"
     },
     "devDependencies": {
