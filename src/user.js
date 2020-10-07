@@ -130,6 +130,10 @@ function createUserCert(userName, caCertName, options, callback = (err, data) =>
         return;
     }
 
+    // Adding a check for the common name to be populated
+    // with the name field if it is blank.
+    options.commonName = _.get(options, 'commonName', userName);
+
     const userCertPath = userDir + '/crt.pem';
     const userKeyPath = userDir + '/key.pem';
     const userP12Path = userDir + '/bundle.p12';
