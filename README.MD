@@ -71,10 +71,10 @@ directory each time or always provide the same path option when calling the MADC
 
         Note: A subject alternative name is automatically added to the generated certificate.  See ENVIRONMENT above.
 
--   Create a User Certificate with CN=test-ca (CA must exist)
+-   Create a User Certificate with CN=test-user (CA must exist)
 
-        yarn run madcert user-create test-ca --org-unit "SECURITY" --org-unit "A456" --org "Some Organization" --country "US"
+        yarn run madcert user-create test-user test-ca --org-unit "SECURITY" --org-unit "A456" --org "Some Organization" --country "US"
 
 -   Create a User Certificate CN=Alice Example (CA must exist)
 
-        yarn run madcert user-create test-ca --common-name "Alice Example" --org-unit "SECURITY" --org-unit "A456" --org "Some Organization" --country "US"
+        yarn run madcert user-create test-user test-ca --common-name "Alice Example" --org-unit "SECURITY" --org-unit "A456" --org "Some Organization" --country "US"
