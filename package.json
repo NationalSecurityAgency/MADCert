@@ -10,9 +10,12 @@
     },
     "author": "National Security Agency (https://code.nsa.gov/)",
     "license": "MIT",
-    "private": true,
     "bin": {
        "madcert": "src/madcert.js"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/NationalSecurityAgency/MADCert.git"
     },
     "dependencies": {
       "fs-extra": "^9.0.1",
