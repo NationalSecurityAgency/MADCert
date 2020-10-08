@@ -17,6 +17,11 @@
       "type": "git",
       "url": "git+https://github.com/NationalSecurityAgency/MADCert.git"
     },
+    "keywords": [
+      "madcert",
+      "certificates",
+      "testing"
+  ],
     "dependencies": {
       "fs-extra": "^9.0.1",
       "lodash": "^4.17.11",
