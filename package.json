@@ -22,6 +22,9 @@
       "certificates",
       "testing"
   ],
+  "bugs": {
+    "url": "https://github.com/NationalSecurityAgency/MADCert/issues"
+  },
     "dependencies": {
       "fs-extra": "^9.0.1",
       "lodash": "^4.17.11",
