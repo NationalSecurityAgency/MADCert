@@ -1,6 +1,6 @@
 {
     "name": "madcert",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Make a Development Cert",
     "engines": {"node":  ">=10.16.0"},
     "main": "src/certs.js",
