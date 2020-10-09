@@ -1,6 +1,6 @@
 {
     "name": "madcert",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Make a Development Cert",
     "engines": {"node":  ">=10.16.0"},
     "main": "src/certs.js",
@@ -10,10 +10,21 @@
     },
     "author": "National Security Agency (https://code.nsa.gov/)",
     "license": "MIT",
-    "private": true,
     "bin": {
        "madcert": "src/madcert.js"
     },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/NationalSecurityAgency/MADCert.git"
+    },
+    "keywords": [
+      "madcert",
+      "certificates",
+      "testing"
+   ],
+   "bugs": {
+     "url": "https://github.com/NationalSecurityAgency/MADCert/issues"
+   },
     "dependencies": {
       "fs-extra": "^9.0.1",
       "lodash": "^4.17.11",
