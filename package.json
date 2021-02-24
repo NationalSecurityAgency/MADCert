@@ -7,7 +7,6 @@
   },
   "main": "src/certs.js",
   "scripts": {
-    "madcert": "node src/madcert.js",
     "test": "mocha --timeout 15000 --recursive"
   },
   "author": "National Security Agency (https://code.nsa.gov/)",
