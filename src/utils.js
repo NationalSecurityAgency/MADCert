@@ -19,26 +19,28 @@ function listCerts(type, basePath = 'pki/') {
         const files = fs.readdirSync(basePath);
 
         _.forEach(files, (c, i) => {
-            if (type !== 'ca') {
-                if (type === 'users') {
-                    console.log('User certificates for ' + c + ':');
+            if(fs.lstatSync(basePath + c).isDirectory()){
+                if (type !== 'ca') {
+                    if (type === 'users') {
+                        console.log('User certificates for ' + c + ':');
+                    } else {
+                        console.log('Server certificates for ' + c + ':');
+                    }
+                    const tempBase = basePath + c + '/' + type + '/';
+                    if (fs.existsSync(tempBase)) {
+                        const files = fs.readdirSync(tempBase);
+                        _.forEach(files, c => {
+                            certs.push(c);
+                            console.log('\t' + c);
+                        });
+                    }
                 } else {
-                    console.log('Server certificates for ' + c + ':');
-                }
-                const tempBase = basePath + c + '/' + type + '/';
-                if (fs.existsSync(tempBase)) {
-                    const files = fs.readdirSync(tempBase);
-                    _.forEach(files, c => {
+                    if (i === 0) {
+                        console.log('Available Certificate Authorities:');
+                    }
                         certs.push(c);
                         console.log('\t' + c);
-                    });
                 }
-            } else {
-                if (i === 0) {
-                    console.log('Available Certificate Authorities:');
-                }
-                certs.push(c);
-                console.log('\t' + c);
             }
         });
     }
