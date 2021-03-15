@@ -1,13 +1,12 @@
 const forge = require('node-forge');
 const fs = require('fs-extra');
 const _ = require('lodash');
-const moment = require('moment');
 const path = require('path');
 
 forge.options.usePureJavaScript = true;
 
 function getSerial() {
-    return moment().format('x'); // Current time formatted in milliseconds since the epoch.
+    return new Date().getTime().toString(); // Current time formatted in milliseconds since the epoch.
 }
 
 function listCerts(type, basePath = 'pki/') {
@@ -38,8 +37,8 @@ function listCerts(type, basePath = 'pki/') {
                     if (i === 0) {
                         console.log('Available Certificate Authorities:');
                     }
-                        certs.push(c);
-                        console.log('\t' + c);
+                    certs.push(c);
+                    console.log('\t' + c);
                 }
             }
         });
