@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const forge = require('node-forge');
 const fs = require('fs');
-const moment = require('moment');
+const { isBefore, format } = require('date-fns');
 
 forge.options.usePureJavaScript = true;
 
@@ -16,11 +16,11 @@ function getSubject(cert) {
 }
 
 function expired(cert) {
-    return moment(cert.validity.notAfter).isBefore(moment());
+    return isBefore(cert.validity.notAfter, new Date());
 }
 
 function getExpires(cert) {
-    return moment(cert.validity.notAfter).format('YYMMDDHHmmss[Z]');
+    return format(cert.validity.notAfter, 'yyMMddHHmmssX');
 }
 
 function createDatabaseEntries(pemCerts, revokedCNs = []) {
@@ -35,7 +35,7 @@ function createDatabaseEntries(pemCerts, revokedCNs = []) {
         });
 
         if (revokedCn) {
-            return `R\t${getExpires(cert)}\t${moment().format('YYMMDDHHmmss[Z]')}\t${cert.serialNumber}\tunknown\t${subject}`;
+            return `R\t${getExpires(cert)}\t${format(new Date(), 'yyMMddHHmmssX')}\t${cert.serialNumber}\tunknown\t${subject}`;
         } else {
             return `${expired(cert) ? 'E' : 'V'}\t${getExpires(cert)}\t\t${cert.serialNumber}\tunknown\t${subject}`;
         }

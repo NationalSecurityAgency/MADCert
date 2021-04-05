@@ -10,8 +10,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 MADCert uses a number of libraries that are licensed under various licenses:
 
+-   [date-fns](https://www.npmjs.com/package/date-fns) is licensed under the MIT license.
 -   [fs-extra](https://www.npmjs.com/package/fs-extra) is licensed under the MIT license.
 -   [lodash](https://www.npmjs.com/package/lodash) is licensed under the MIT license.
--   [moment](https://www.npmjs.com/package/moment) is licensed under the MIT license.
 -   [node-forge](https://www.npmjs.com/package/node-forge) is licensed under either the BSD 3 Clause.
 -   [yargs](https://www.npmjs.com/package/yargs) is licensed under the MIT license.
