@@ -9,7 +9,7 @@ const subjectAttrs = require('./subjectAttributes');
 const utils = require('./utils');
 const normalizeName = utils.normalizeName;
 
-function buildCACert(keys, options, caSubject = null) {
+function buildCACert(keys, options, caCert = null) {
     const cert = pki.createCertificate();
     cert.publicKey = keys.publicKey;
     cert.serialNumber = utils.getSerial();
@@ -29,45 +29,42 @@ function buildCACert(keys, options, caSubject = null) {
         // Parse the validTo from ISO 8601 format
         cert.validity.notAfter = new Date(options.validTo);
     }
-
+    const caSubject = _.get(caCert, "subject.attributes", null);
     cert.setSubject(attrs);
     cert.setIssuer(caSubject ? caSubject : attrs);
-    cert.setExtensions([
+    const extensions = [
         {
             name: 'basicConstraints',
             cA: true,
+            critical: true,
         },
         {
             name: 'keyUsage',
             keyCertSign: true,
             digitalSignature: true,
-            nonRepudiation: true,
-            keyEncipherment: true,
-            dataEncipherment: true,
+            critical: true,
             cRLSign: true,
-        },
-        {
-            name: 'extKeyUsage',
-            serverAuth: true,
-            clientAuth: true,
-            codeSigning: true,
-            emailProtection: true,
-            timeStamping: true,
-        },
-        {
-            name: 'nsCertType',
-            client: true,
-            server: false,
-            email: true,
-            objsign: true,
-            sslCA: true,
-            emailCA: true,
-            objCA: true,
         },
         {
             name: 'subjectKeyIdentifier',
         },
-    ]);
+    ];
+
+    if(caCert){
+        extensions.push({
+            name: 'authorityKeyIdentifier',
+            keyIdentifier: caCert.generateSubjectKeyIdentifier().getBytes(),
+        });
+        extensions.push(
+        {
+            name: 'extKeyUsage',
+            serverAuth: true,
+            critical: true,
+        });
+    }
+
+    cert.setExtensions(extensions);
+
     return cert;
 }
 
@@ -141,7 +138,7 @@ function createIntermediateCACert(caName, rootCaName, options) {
         const caKey = forge.pki.privateKeyFromPem(rootCaKeyPem);
 
         const keys = pki.rsa.generateKeyPair(2048);
-        const cert = buildCACert(keys, options, caCert.subject.attributes);
+        const cert = buildCACert(keys, options, caCert);
 
         fs.ensureDirSync(newCaPath);
         // self-sign certificate

@@ -34,7 +34,7 @@ function getIpAddresses() {
     return localIPs;
 }
 
-function buildServerCert(keys, caName, caSubject, localhost, options) {
+function buildServerCert(keys, caName, caCert, localhost, options) {
     const cert = pki.createCertificate();
     cert.publicKey = keys.publicKey;
     cert.serialNumber = utils.getSerial();
@@ -56,40 +56,33 @@ function buildServerCert(keys, caName, caSubject, localhost, options) {
     const attrs = subjectAttrs(options);
 
     cert.setSubject(attrs);
-    cert.setIssuer(caSubject);
+    cert.setIssuer(caCert.subject.attributes);
     const extensions = [
         {
             name: 'basicConstraints',
             cA: false,
+            critical: true,
         },
         {
             name: 'keyUsage',
-            keyCertSign: true,
             digitalSignature: true,
             nonRepudiation: true,
             keyEncipherment: true,
             dataEncipherment: true,
+            critical: true,
         },
         {
             name: 'extKeyUsage',
             serverAuth: true,
             clientAuth: true,
-            codeSigning: true,
             emailProtection: true,
-            timeStamping: true,
-        },
-        {
-            name: 'nsCertType',
-            client: true,
-            server: true,
-            email: true,
-            objsign: true,
-            sslCA: true,
-            emailCA: true,
-            objCA: true,
         },
         {
             name: 'subjectKeyIdentifier',
+        },
+        {
+            name: 'authorityKeyIdentifier',
+            keyIdentifier: caCert.generateSubjectKeyIdentifier().getBytes(),
         },
     ];
 
@@ -241,7 +234,7 @@ function createServerCert(
         const cert = buildServerCert(
             keys,
             caCertName,
-            caCert.subject.attributes,
+            caCert,
             localhost,
             options
         );

@@ -77,17 +77,17 @@ function setExpirationDate(cert, expired) {
     cert.validity.notBefore = new Date();
     cert.validity.notAfter = new Date();
 
-    // if expired, set cert to be valid starting 5 years before today
+    // if expired, set cert to be valid starting 1 year before today
     // if not expired, set cert to be valid starting yesterday
     expired
-        ? cert.validity.notBefore.setFullYear(cert.validity.notBefore.getFullYear() - 5)
+        ? cert.validity.notBefore.setFullYear(cert.validity.notBefore.getFullYear() - 1)
         : cert.validity.notBefore.setDate(cert.validity.notBefore.getDate() - 1);
 
     // if expired, set cert to be valid until yesterday
-    // if not expired, set cert to be valid until 5 years from today
+    // if not expired, set cert to be valid until 1 year from today
     expired
         ? cert.validity.notAfter.setDate(cert.validity.notAfter.getDate() - 1)
-        : cert.validity.notAfter.setFullYear(cert.validity.notAfter.getFullYear() + 5);
+        : cert.validity.notAfter.setFullYear(cert.validity.notAfter.getFullYear() + 1);
 }
 
 function setValidFrom(cert, date) {}
