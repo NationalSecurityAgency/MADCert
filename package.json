@@ -19,9 +19,34 @@
     "url": "git+https://github.com/NationalSecurityAgency/MADCert.git"
   },
   "keywords": [
-    "madcert",
+    "ca",
+    "cert",
     "certificates",
-    "testing"
+    "client certificates",
+    "crt",
+    "crypto",
+    "cryptography",
+    "development",
+    "encryption",
+    "https",
+    "keypair",
+    "keys",
+    "localhost",
+    "madcert",
+    "node-forge",
+    "openssl",
+    "pem",
+    "pki",
+    "p12",
+    "self",
+    "server",
+    "signed",
+    "ssl",
+    "testing",
+    "tls",
+    "trust",
+    "user",
+    "x509"
   ],
   "bugs": {
     "url": "https://github.com/NationalSecurityAgency/MADCert/issues"
