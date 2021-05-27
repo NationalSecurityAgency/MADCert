@@ -9,7 +9,7 @@ const subjectAttrs = require('./subjectAttributes');
 const utils = require('./utils');
 const normalizeName = utils.normalizeName;
 
-function buildUserCert(keys, options, caSubject) {
+function buildUserCert(keys, options, caCert) {
     const cert = pki.createCertificate();
     cert.publicKey = keys.publicKey;
     cert.serialNumber = utils.getSerial();
@@ -31,40 +31,33 @@ function buildUserCert(keys, options, caSubject) {
     const attrs = subjectAttrs(options);
 
     cert.setSubject(attrs);
-    cert.setIssuer(caSubject);
+    cert.setIssuer(caCert.subject.attributes);
     const extensions = [
         {
             name: 'basicConstraints',
             cA: false,
+            critical: true,
         },
         {
             name: 'keyUsage',
-            keyCertSign: true,
             digitalSignature: true,
             nonRepudiation: true,
             keyEncipherment: true,
             dataEncipherment: true,
+            critical: true,
         },
         {
             name: 'extKeyUsage',
             serverAuth: true,
             clientAuth: true,
-            codeSigning: true,
             emailProtection: true,
-            timeStamping: true,
-        },
-        {
-            name: 'nsCertType',
-            client: true,
-            server: false,
-            email: true,
-            objsign: true,
-            sslCA: true,
-            emailCA: true,
-            objCA: true,
         },
         {
             name: 'subjectKeyIdentifier',
+        },
+        {
+            name: 'authorityKeyIdentifier',
+            keyIdentifier: caCert.generateSubjectKeyIdentifier().getBytes(),
         },
     ];
 
@@ -172,7 +165,7 @@ function createUserCert(userName, caCertName, options, callback = (err, data) =>
         const caKeyPem = fs.readFileSync(caPath + '/key.pem', 'utf8');
         const caKey = forge.pki.privateKeyFromPem(caKeyPem);
 
-        const cert = buildUserCert(keys, options, caCert.subject.attributes);
+        const cert = buildUserCert(keys, options, caCert);
 
         cert.sign(caKey, utils.createMessageDigest());
 
