@@ -79,7 +79,11 @@ To add MADCert to your project:
 
 #### Certificate Storage Location
 
-By default, the certs created by MADCert will be placed under a "pki" folder in the current working directory. MADCert commands also have the `basepath` option to specify a top-level path where the certs will be stored. It is important that all of the certs are placed under the same top-level folder, so either run MADCert from within the same location each time or always provide the same basepath option when calling the MADCert commands.
+By default, the certs created by MADCert will be placed under a "pki" folder in the current working directory. MADCert commands also have the `basePath` option to specify a top-level path where the certs will be stored. It is important that all of the certs are placed under the same top-level folder, so either run MADCert from within the same location each time or always provide the same basepath option when calling the MADCert commands.
+
+- Example Specifying the Certificate Storage Location (available on all certificate related commands)
+
+        madcert.createCACert("Test Root CA", {validFrom: "2019-08-08", validTo: "2024-08-09",basePath:"/some/path"})
 
 
 ### CLI Examples
