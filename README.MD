@@ -2,50 +2,103 @@
 
 Use MADCert to create root and intermediate Certificate Authorities, issue user and server certificates, etc for testing purposes.
 
-MADCert is a cross-platform tool that does not require OpenSSL or any other programs to be installed in the Operating System.
+MADCert is a cross-platform tool that consists of a certificate generator, a file system certificate manager, and a command line interface.
 
-## Prerequisites
+MADCert does not require openssl or any other programs to be installed in the Operating System.
 
--  You will need Node.js installed on your operating system. For Linux and Mac OS X, we recommend using [nvm - Node Version Manager](https://github.com/nvm-sh/nvm). For Windows, we recommend using [nvm-windows](https://github.com/coreybutler/nvm-windows).
+Both Node.js and CLI exmples are provided below.
 
-## Installation
+
+## Usage
+
+### Node.js Examples
 
 To add MADCert to your project:
 
     npm install madcert
 
-## Usage
+    var madcert = require("madcert")
 
-    npx madcert <command> <arguments> [options]
+-   Create a Certificate Authority (CA)
 
-## Environment
+        madcert.createCACert("Test Root CA", {validFrom: "2019-08-08", validTo: "2024-08-09"})
 
--   `MADCERT_LH_SUBJECT_ALT_DNS_NAME` - Only used when creating a localhost server certificate (`--localhost true`). When generating a localhost server certificate, MADCert will add a subject alternative DNS name to the certificate. This environment variable can be used to specify the subject alternative DNS name that will be added. If this environment variable is not set, then the host name will be used.
+-   Create an Intermediate CA (Root CA must exist)
 
-## Commands, Arguments, and Options
+        madcert.createIntermediateCACert("Test CA","rootCA", {validFrom: "2019-08-08", validTo: "2024-08-09"});
 
-When you run MADCert help (using `npx madcert --help`), it will display all of the commands, arguments, and options.
+-   Create a Server Certificate (CA must exist)
 
-### Arguments
+        madcert.createServerCert("Test Server", "test-ca", false, {validFrom: "2019-08-08", validTo: "2024-08-09"});
 
--   `name` Name is used for the name of the directory under which PKI files are created. If the `--common-name` option is not used then `name` will also be used for the Common Name in the certificate subject.
--   `ca_name` CA name is used to identify the Certificate Authority to use when creating or removing users and servers.
--   `root_ca_name` When creating an intermediate Certificate Authority, `root_ca_name` identifies the root CA that issues the intermediate CA's certificate.
+-   Create a localhost Server Certificate (CA must exist)
 
-### Options
+        madcert.createServerCert("localhost", "test-ca", true, {validFrom: "2019-08-08", validTo: "2024-08-09"});
 
-The MADCert options are grouped in the help output by the commands that they can be used with.
+        Note: A subject alternative name is automatically added to the generated certificate.  See ENVIRONMENT above.
 
--   Creation Options - these options can be used with any of the commands that create PKI files for CAs, servers, and users
--   User Creation Options - these options can be used with the `user-create` command
--   Server Creation Options - these options can be used with the `server-create` command
--   Options - these options are not specific to any particular command
+-   Create a User Certificate with CN=test-user (CA must exist)
 
-## Certificate Storage Location
+        madcert.createUserCert("test-user", "test-ca", {commonName: "test-user", organizationalUnits: ["SECURITY", "A456"], organizations: ["Some Organization"], country: "US", validFrom: "2019-08-08", validTo: "2024-08-09"});
 
-By default, the certs created by MADCert will be placed under a "pki" folder in the current working directory. MADCert commands also have the `--path` or `-p` option to specify a top-level path where the certs will be stored. It is important that all of the certs are placed under the same top-level folder, so either run MADCert from within the same directory each time or always provide the same path option when calling the MADCert commands.
+-   Create a User Certificate CN=Alice Example (CA must exist)
 
-## Examples
+        madcert.createUserCert("Alice Example", "test-ca", {commonName: "Alice Example", organizationalUnits: ["SECURITY", "A456"], organizations: ["Some Organization"], country: "US", validFrom: "2019-08-08", validTo: "2024-08-09"});
+
+-   List CA Certificates
+
+        madcert.listCACerts();
+
+-   List Server Cerficates
+
+        madcert.listServerCerts();
+
+-   List User Certificates
+
+        madcert.listUserCerts();
+
+-   Remove a CA Certificate
+
+        madcert.removeCACert("test-root-ca");
+
+-   Remove a Server Certificate
+
+        madcert.removeServerCert("test-server");
+
+-   Remove a User Certificate
+
+        madcert.removeUserCert("test-user");
+
+-  Convert name to a File Path Friendly Name
+
+        madcert.normalizeName("Test 123");
+        > 'test-123'
+
+
+### Additional Node.js Options
+
+#### Certificate Storage Location
+
+By default, the certs created by MADCert will be placed under a "pki" folder in the current working directory. MADCert commands also have the `basepath` option to specify a top-level path where the certs will be stored. It is important that all of the certs are placed under the same top-level folder, so either run MADCert from within the same location each time or always provide the same basepath option when calling the MADCert commands.
+
+
+### CLI Examples
+
+-   General Syntax
+
+        npx madcert <command> <arguments> [options]
+
+-   Help
+
+        npx madcert --help
+
+    The MADCert options are grouped in the help output by the commands that they can be used with.
+
+    -   Creation Options - these options can be used with any of the commands that create PKI files for CAs, servers, and users
+    -   User Creation Options - these options can be used with the `user-create` command
+    -   Server Creation Options - these options can be used with the `server-create` command
+    -   Options - these options are not specific to any particular command
+
 
 -   Create a Certificate Authority (CA)
 
@@ -72,3 +125,44 @@ By default, the certs created by MADCert will be placed under a "pki" folder in 
 -   Create a User Certificate CN=Alice Example (CA must exist)
 
         npx madcert user-create test-user test-ca --common-name "Alice Example" --org-unit "SECURITY" --org-unit "A456" --org "Some Organization" --country "US"
+
+-   List CA Certificates
+
+        npx madcert ca-list
+
+-   List Server Cerficates
+
+        npx madcert server-list
+
+-   List User Certificates
+
+        npx madcert user-list
+
+-   Remove a CA Certificate
+
+        npx madcert ca-remove test-ca
+
+-   Remove a Server Certificate
+
+        npx madcert server-remove test-server test-ca
+
+-   Remove a User Certificate
+
+        npx madcert user-remove test-user test-ca
+
+
+### Additional CLI Options
+
+#### Certificate Storage Location
+
+By default, the certs created by MADCert will be placed under a "pki" folder in the current working directory. MADCert commands also have the `--path` or `-p` option to specify a top-level path where the certs will be stored. It is important that all of the certs are placed under the same top-level folder, so either run MADCert from within the same directory each time or always provide the same path option when calling the MADCert commands.
+
+#### Environment
+
+-   `MADCERT_LH_SUBJECT_ALT_DNS_NAME` - Only used when creating a localhost server certificate (`--localhost true`). When generating a localhost server certificate, MADCert will add a subject alternative DNS name to the certificate. This environment variable can be used to specify the subject alternative DNS name that will be added. If this environment variable is not set, then the host name will be used.
+
+#### Arguments
+
+-   `name` Name is used for the name of the directory under which PKI files are created. If the `--common-name` option is not used then `name` will also be used for the Common Name in the certificate subject.
+-   `ca_name` CA name is used to identify the Certificate Authority to use when creating or removing users and servers.
+-   `root_ca_name` When creating an intermediate Certificate Authority, `root_ca_name` identifies the root CA that issues the intermediate CA's certificate.
