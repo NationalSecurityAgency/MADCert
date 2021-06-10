@@ -110,7 +110,7 @@ By default, the certs created by MADCert will be placed under a "pki" folder in 
 
 -   Create an Intermediate CA (Root CA must exist)
 
-        npx madcert ca-create test-ca test-root-ca --common-name "Test CA" --org-unit "orgA" --org-unit "A123" --org "Some Organization" --country "US"
+        npx madcert ca-intermediate-create test-ca test-root-ca --common-name "Test CA" --org-unit "orgA" --org-unit "A123" --org "Some Organization" --country "US"
 
 -   Create a Server Certificate (CA must exist)
 
