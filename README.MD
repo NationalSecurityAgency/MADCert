@@ -83,7 +83,7 @@ By default, the certs created by MADCert will be placed under a "pki" folder in 
 
 - Example Specifying the Certificate Storage Location (available on all certificate related commands)
 
-        madcert.createCACert("Test Root CA", {validFrom: "2019-08-08", validTo: "2024-08-09", basePath:"/some/path"})
+        madcert.createCACert("Test Root CA", {validFrom: "2019-08-08", validTo: "2024-08-09", basePath: "/some/path"})
 
 
 ### CLI Examples
