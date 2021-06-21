@@ -4,7 +4,7 @@ const path = require('path');
 const util = require('util');
 const pkiPath = `${__dirname}/pki`;
 
-describe.only('Testing certToJSON.js', function() {
+describe('Testing certToJSON.js', function() {
     it('Converts a PEM certificate to JSON', function() {
         const certJSON = certToJSON(path.join(pkiPath, 'example/ca/crt.pem'));
         expect(certJSON).to.be.an('object');
