@@ -8,6 +8,7 @@ const user = require('./user');
 const utils = require('./utils');
 const normalizeName = utils.normalizeName;
 const createSubjectAttributes = require('./subjectAttributes');
+const certToJSON = require('./certToJSON');
 
 function jsonListCerts(basePath = 'pki/') {
     const certs = {};
@@ -95,6 +96,7 @@ const certs = {
     createCertDatabase,
     normalizeName,
     createSubjectAttributes,
+    certToJSON,
 };
 
 module.exports = certs;

@@ -7,14 +7,6 @@ const expect = require('chai').expect;
 const pkiPath = `${__dirname}/pki`;
 
 describe('Testing MADCert', function() {
-    before('Create PKI directory', function() {
-        fs.ensureDirSync(pkiPath);
-    });
-
-    after('Remove PKI directory', function() {
-        fs.removeSync(pkiPath);
-    });
-
     describe('CA Tests', function() {
         it('Create CA Cert', function(done) {
             try {
