@@ -2,6 +2,7 @@
 
 const version = require('../package.json').version;
 
+const util = require('util')
 const yargs = require('yargs');
 const certs = require('./certs');
 
@@ -113,6 +114,33 @@ const argv = yargs
             });
         }
     )
+    .command(
+        'print <ca_name>',
+        'print ca',
+        {},
+        function(argv) {
+            executed = true;
+            console.log(util.inspect(certs.caCertToJSON(argv.path, argv.ca_name, argv.properties), {showHidden: false, depth: null}));
+        }
+    )
+    .command(
+        'print-user <ca_name> <user>',
+        'print user',
+        {},
+        function(argv) {
+            executed = true;
+            console.log(util.inspect(certs.userCertToJSON(argv.path, argv.ca_name, argv.user, argv.properties), {showHidden: false, depth: null}));
+        }
+    )
+    .command(
+        'print-server <ca_name> <server>',
+        'print server',
+        {},
+        function(argv) {
+            executed = true;
+            console.log(util.inspect(certs.serverCertToJSON(argv.path, argv.ca_name, argv.server, argv.properties), {showHidden: false, depth: null}));
+        }
+    )
     .option('path', {
         alias: 'p',
         describe: 'Base path for pki.',
@@ -199,6 +227,12 @@ const argv = yargs
         describe: 'Valid to date in ISO 8601 format.',
         requiresArg: true,
     })
+    .option('properties', {
+        describe: 'Properties to filter print result. This option can be specified multiple times.',
+        type: 'array',
+        default: [],
+        requiresArg: true,
+    })
     .alias('version', 'v')
     .alias('h', 'help')
     .conflicts('expired', 'valid-to')
@@ -218,6 +252,7 @@ const argv = yargs
     .group('password', 'Server Creation Options:')
     .group('subject-alt-dns', 'Server Creation Options:')
     .group('subject-alt-ip', 'Server Creation Options:')
+    .group('properties', 'Print Options:')
     .wrap(yargs.terminalWidth()).argv;
 
 if (!executed) {

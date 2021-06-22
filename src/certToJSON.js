@@ -67,7 +67,7 @@ const certToJSON = function certToJSON(path, propertiesFilter) {
         result.push(_.pick(value, extensionsFilter));
     }, []);
 
-    if(propertiesFilter)
+    if(propertiesFilter && propertiesFilter.length > 0)
         return _.pick(crtJSON, propertiesFilter);
     return crtJSON;
 }

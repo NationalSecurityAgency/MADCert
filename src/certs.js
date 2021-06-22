@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const _ = require('lodash');
+const path = require('path');
 
 const caDb = require('./caDatabase');
 const ca = require('./ca');
@@ -81,6 +82,21 @@ function createCertDatabase(caName, { basePath = 'pki/', revokedCNs = [] } = {})
     );
 }
 
+function caCertToJSONWrapper(basePath, caName, propertiesFilter){
+    const certPath = basePath ? path.join(basePath, normalizeName(caName), 'ca/crt.pem') : path.join(__dirname, 'pki', normalizeName(caName), 'ca/crt.pem');
+    return certToJSON(certPath, propertiesFilter);
+}
+
+function serverCertToJSONWrapper(basePath, caName, serverName, propertiesFilter){
+    const certPath = basePath ? path.join(basePath, normalizeName(caName), 'servers', serverName, 'crt.pem') : path.join(__dirname, 'pki', normalizeName(caName), 'servers', serverName, 'crt.pem');
+    return certToJSON(certPath, propertiesFilter);
+}
+
+function userCertToJSONWrapper(basePath, caName, userName, propertiesFilter){
+    const certPath = basePath ? path.join(basePath, normalizeName(caName), 'users', userName, 'crt.pem') : path.join(__dirname, 'pki', normalizeName(caName), 'users', userName, 'crt.pem');
+    return certToJSON(certPath, propertiesFilter);
+}
+
 const certs = {
     createCACert: ca.createCACert,
     createIntermediateCACert: ca.createIntermediateCACert,
@@ -96,7 +112,9 @@ const certs = {
     createCertDatabase,
     normalizeName,
     createSubjectAttributes,
-    certToJSON,
+    caCertToJSON: caCertToJSONWrapper,
+    serverCertToJSON: serverCertToJSONWrapper,
+    userCertToJSON: userCertToJSONWrapper,
 };
 
 module.exports = certs;
