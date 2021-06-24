@@ -46,6 +46,15 @@ const argv = yargs
         certs.listCACerts(argv.path);
     })
     .command(
+        'ca-print <name>',
+        'print certificate authority details',
+        {},
+        function(argv) {
+            executed = true;
+            console.log(util.inspect(certs.caCertToJSON(argv.path, argv.name, argv.properties), {showHidden: false, depth: null}));
+        }
+    )
+    .command(
         'ca-remove <name>',
         'remove a certificate authority and all associated users and servers',
         {},
@@ -75,6 +84,15 @@ const argv = yargs
         executed = true;
         certs.listServerCerts(argv.path);
     })
+    .command(
+        'server-print <name> <ca_name>',
+        'print server certificate details',
+        {},
+        function(argv) {
+            executed = true;
+            console.log(util.inspect(certs.serverCertToJSON(argv.path, argv.ca_name, argv.name, argv.properties), {showHidden: false, depth: null}));
+        }
+    )
     .command('server-remove <name> <ca_name>', 'remove a server certificate', {}, function(argv) {
         executed = true;
         certs.removeServerCert(argv.name, argv.ca_name, argv.path);
@@ -99,6 +117,15 @@ const argv = yargs
         executed = true;
         certs.listUserCerts(argv.path);
     })
+    .command(
+        'user-print <name> <ca_name>',
+        'print user certificate details',
+        {},
+        function(argv) {
+            executed = true;
+            console.log(util.inspect(certs.userCertToJSON(argv.path, argv.ca_name, argv.name, argv.properties), {showHidden: false, depth: null}));
+        }
+    )
     .command('user-remove <name> <ca_name>', 'remove a user certificates', {}, function(argv) {
         executed = true;
         certs.removeUserCert(argv.name, argv.ca_name, argv.path);
@@ -112,33 +139,6 @@ const argv = yargs
             certs.createCertDatabase(argv.ca_name, {
                 basePath: argv.path ? argv.path : undefined,
             });
-        }
-    )
-    .command(
-        'print <ca_name>',
-        'print ca',
-        {},
-        function(argv) {
-            executed = true;
-            console.log(util.inspect(certs.caCertToJSON(argv.path, argv.ca_name, argv.properties), {showHidden: false, depth: null}));
-        }
-    )
-    .command(
-        'print-user <ca_name> <user>',
-        'print user',
-        {},
-        function(argv) {
-            executed = true;
-            console.log(util.inspect(certs.userCertToJSON(argv.path, argv.ca_name, argv.user, argv.properties), {showHidden: false, depth: null}));
-        }
-    )
-    .command(
-        'print-server <ca_name> <server>',
-        'print server',
-        {},
-        function(argv) {
-            executed = true;
-            console.log(util.inspect(certs.serverCertToJSON(argv.path, argv.ca_name, argv.server, argv.properties), {showHidden: false, depth: null}));
         }
     )
     .option('path', {
