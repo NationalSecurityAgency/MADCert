@@ -1,6 +1,6 @@
 {
   "name": "madcert",
-  "version": "2.1.3",
+  "version": "2.2.0",
   "description": "Make a Development Cert",
   "engines": {
     "node": ">=10.16.0"
