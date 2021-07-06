@@ -63,17 +63,28 @@ To add MADCert to your project:
 
 -   Remove a Server Certificate
 
-        madcert.removeServerCert("test-server");
+        madcert.removeServerCert("test-server", "test-ca");
 
 -   Remove a User Certificate
 
-        madcert.removeUserCert("test-user");
+        madcert.removeUserCert("test-user", "test-ca");
+
+-   Retrieve a CA Certificate as JSON
+
+        madcert.caCertToJSON("test-root-ca");
+
+-   Retrieve a Server Certificate as JSON
+
+        madcert.serverCertToJSON("test-server", "test-ca");
+
+-   Retrieve a User Certificate as JSON
+
+        madcert.userCertToJSON("test-user", "test-ca");
 
 -  Convert name to a File Path Friendly Name
 
         madcert.normalizeName("Test 123");
         > 'test-123'
-
 
 ### Additional Node.js Options
 
@@ -101,6 +112,7 @@ By default, the certs created by MADCert will be placed under a "pki" folder in 
     -   Creation Options - these options can be used with any of the commands that create PKI files for CAs, servers, and users
     -   User Creation Options - these options can be used with the `user-create` command
     -   Server Creation Options - these options can be used with the `server-create` command
+    -   Print Options - these options can be used with the `ca-print`, `server-print`, and `user-print` commands
     -   Options - these options are not specific to any particular command
 
 
@@ -154,6 +166,17 @@ By default, the certs created by MADCert will be placed under a "pki" folder in 
 
         npx madcert user-remove test-user test-ca
 
+-   Print a CA Certificate
+
+        npx madcert ca-print test-ca
+
+-   Print a Server Certificate
+
+        npx madcert server-print test-server test-ca
+
+-   Print a User Certificate
+
+        npx madcert user-print test-user test-ca
 
 ### Additional CLI Options
 
