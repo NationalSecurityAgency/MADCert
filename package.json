@@ -55,7 +55,7 @@
     "date-fns": "^2.19.0",
     "fs-extra": "^9.1.0",
     "lodash": "^4.17.21",
-    "node-forge": "^0.10.0",
+    "node-forge": "^1.0.0",
     "yargs": "^16.2.0"
   },
   "devDependencies": {
