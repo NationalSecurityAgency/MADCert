@@ -195,6 +195,10 @@ function createServerCert(
         return;
     }
 
+    // Adding a check for the common name to be populated
+    // with the name field if it is blank.
+    options.commonName = _.get(options, 'commonName', serverName);
+
     const serverCertPath = path.join(serverDir, '/crt.pem');
     const serverKeyPath = path.join(serverDir, '/key.pem');
     const serverP12Path = path.join(serverDir, '/bundle.p12');
