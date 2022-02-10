@@ -41,9 +41,7 @@ function buildUserCert(keys, options, caCert) {
         {
             name: 'keyUsage',
             digitalSignature: true,
-            nonRepudiation: true,
             keyEncipherment: true,
-            dataEncipherment: true,
             critical: true,
         },
         {
