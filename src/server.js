@@ -66,9 +66,7 @@ function buildServerCert(keys, caName, caCert, localhost, options) {
         {
             name: 'keyUsage',
             digitalSignature: true,
-            nonRepudiation: true,
             keyEncipherment: true,
-            dataEncipherment: true,
             critical: true,
         },
         {
