@@ -6,7 +6,7 @@ MADCert is a cross-platform tool that consists of a certificate generator, a fil
 
 MADCert does not require openssl or any other programs to be installed in the Operating System.
 
-Both Node.js and CLI exmples are provided below.
+Both Node.js and CLI examples are provided below.
 
 
 ## Usage
@@ -49,7 +49,7 @@ To add MADCert to your project:
 
         madcert.listCACerts();
 
--   List Server Cerficates
+-   List Server Certificates
 
         madcert.listServerCerts();
 
@@ -146,7 +146,7 @@ By default, the certs created by MADCert will be placed under a "pki" folder in 
 
         npx madcert ca-list
 
--   List Server Cerficates
+-   List Server Certificates
 
         npx madcert server-list
 
