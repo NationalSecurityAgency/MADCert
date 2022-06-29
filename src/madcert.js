@@ -69,6 +69,8 @@ const argv = yargs
             basePath: argv.path,
             commonName: argv['common-name'],
             country: argv.country,
+            locality: argv.locality,
+            state: argv.state,
             expired: argv.expired,
             organizations: argv.org,
             organizationalUnits: argv['org-unit'],
@@ -103,6 +105,8 @@ const argv = yargs
             basePath: argv.path,
             commonName: argv['common-name'],
             country: argv.country,
+            locality: argv.locality,
+            state: argv.state,
             expired: argv.expired,
             rootCaName: argv['root-ca-name'],
             organizations: argv.org,
@@ -157,6 +161,13 @@ const argv = yargs
         describe: 'Country.',
         default: 'US',
         requiresArg: true,
+    })
+    .option('locality', {
+        describe: 'Locality',
+    })
+    .option('state', {
+        alias: 'st',
+        describe: 'State',
     })
     .option('expired', {
         alias: 'e',
@@ -240,6 +251,8 @@ const argv = yargs
     .help('help')
     .group('common-name', 'Creation Options:')
     .group('country', 'Creation Options:')
+    .group('locality', 'Creation Options:')
+    .group('state', 'Creation Options:')
     .group('expired', 'Creation Options:')
     .group('org-unit', 'Creation Options:')
     .group('org', 'Creation Options:')
