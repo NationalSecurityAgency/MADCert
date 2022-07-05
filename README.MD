@@ -205,8 +205,8 @@ By default, the certs created by MADCert will be placed under a "pki" folder in 
 | `org`              | `-o`  | Array   |               | Organization name. This option can be specified multiple times|
 | `org-unit`         | `-u`  | Array   |               | Organizational unit name. This option can be specified multiple times.|
 | `password`         | `-w`  | String  | 'changeme'    | Certificate password |
-| `subject-alt-dns`  | `-d`  | Array   |               | Create certificate with DNS subject alternative name. This option can be specified multiple times.|
-| `subject-alt-ip`   | `-i`  | Array   |               | Create certificate with IP subject alternative name. This option can be specified multiple times.      |
-| `subject-alt-email`| `-m`  | Array   |               | Create certificate with rfc822/email subject alternative name. This option can be specified multiple times.|
+| `subject-alt-dns`  | `-d`  | Array   |               | Create certificate with DNS subject alternative name. This option can be specified multiple times and only applies to server certs.|
+| `subject-alt-ip`   | `-i`  | Array   |               | Create certificate with IP subject alternative name. This option can be specified multiple times and only applies to server certs. |
+| `subject-alt-email`| `-m`  | Array   |               | Create certificate with rfc822/email subject alternative name. This option can be specified multiple times and only applies to server certs. |
 | `valid-from`       | `-f`  | Date    |               | Valid from date in ISO 8601 format |
 | `valid-to`         | `-t`  | Date    |               | Valid to date in ISO 8601 format|
