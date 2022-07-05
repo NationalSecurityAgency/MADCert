@@ -55,6 +55,26 @@ describe('Testing MADCert', function() {
             });
         });
 
+
+        it('Create Server Cert with locality and state', function(done) {
+            try {
+                certs.createServerCert('Server Locality and State', 'ca-cert-2', false, {
+                    locality: 'Baltimore',
+                    state: 'Maryland',
+                    basePath: global.pkiPath,
+                    expired: false,
+                    rootCaName: 'CA Cert',
+                });
+                const created = fs.pathExistsSync(
+                    path.join(global.pkiPath, 'ca-cert-2/servers/server-locality-and-state/crt.pem')
+                );
+                expect(created).to.be.true;
+                done();
+            } catch (e) {
+                done(e);
+            }
+        });
+
         it('Create Server Cert with start and expiration dates', function(done) {
             try {
                 certs.createServerCert('Server Valid From and To', 'ca-cert-2', false, {
@@ -154,6 +174,24 @@ describe('Testing MADCert', function() {
                 });
                 const created = fs.pathExistsSync(
                     path.join(global.pkiPath, caDir, 'users/user-valid-from-and-to/crt.pem')
+                );
+                expect(created).to.be.true;
+                done();
+            } catch (e) {
+                done(e);
+            }
+        });
+
+        it('Create User Cert with locality and state', function(done) {
+            try {
+                certs.createUserCert('User locality and state', caName, {
+                    locality: 'Baltimore',
+                    state: 'Maryland',
+                    basePath: global.pkiPath,
+                    expired: false,
+                });
+                const created = fs.pathExistsSync(
+                    path.join(global.pkiPath, caDir, 'users/user-locality-and-state/crt.pem')
                 );
                 expect(created).to.be.true;
                 done();

@@ -33,6 +33,21 @@ function createSubjectAttributes(options) {
         });
     }
 
+    const l = _.get(options, 'locality');
+    if (l) {
+        attrs.push({
+            shortName: 'L',
+            value: l,
+        });
+    }
+
+    const st = _.get(options, 'state');
+    if(st) {
+        attrs.push({
+            shortName: 'ST',
+            value: st,
+        });
+    }
     return attrs;
 }
 

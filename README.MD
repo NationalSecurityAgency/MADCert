@@ -190,6 +190,23 @@ By default, the certs created by MADCert will be placed under a "pki" folder in 
 
 #### Arguments
 
--   `name` Name is used for the name of the directory under which PKI files are created. If the `--common-name` option is not used then `name` will also be used for the Common Name in the certificate subject.
--   `ca_name` CA name is used to identify the Certificate Authority to use when creating or removing users and servers.
--   `root_ca_name` When creating an intermediate Certificate Authority, `root_ca_name` identifies the root CA that issues the intermediate CA's certificate.
+
+|                    | Alias | Type    | Default Value | Description |
+| :---               | :----:| :----:  |    :----:     |        ---: |
+| `name`             |       | String  |               | Name is used for the name of the directory under which PKI files are created. If the `--common-name` option is not used then `name` will also be used for the Common Name in the certificate subject.   |
+| `ca-name`          |       | String  |               | CA name is used to identify the Certificate Authority to use when creating or removing users and servers.      |
+| `root_ca-name`     | `-r`  | String  |               | When creating an intermediate Certificate Authority, `root_ca_name` identifies the root CA that issues the intermediate CA's certificate.
+| `path`             | `-p`  | String  | '/pki'        | Base path for pki |
+| `common-name`      | `-n`  | String  |               | Common Name in the Distinguished Name |
+| `country`          | `-c`  | String  |               | Country |
+| `locality`         |       | String  |               | Locality|
+| `state`            | `-st` | String  |               | State|
+| `expired`          | `-e`  | Boolean |               | Create an expired certificate |
+| `org`              | `-o`  | Array   |               | Organization name. This option can be specified multiple times|
+| `org-unit`         | `-u`  | Array   |               | Organizational unit name. This option can be specified multiple times.|
+| `password`         | `-w`  | String  | 'changeme'    | Certificate password |
+| `subject-alt-dns`  | `-d`  | Array   |               | Create certificate with DNS subject alternative name. This option can be specified multiple times and only applies to server certs.|
+| `subject-alt-ip`   | `-i`  | Array   |               | Create certificate with IP subject alternative name. This option can be specified multiple times and only applies to server certs. |
+| `subject-alt-email`| `-m`  | Array   |               | Create certificate with rfc822/email subject alternative name. This option can be specified multiple times and only applies to server certs. |
+| `valid-from`       | `-f`  | Date    |               | Valid from date in ISO 8601 format |
+| `valid-to`         | `-t`  | Date    |               | Valid to date in ISO 8601 format|
