@@ -44,6 +44,9 @@ function buildCACert(keys, options, caCert = null) {
             digitalSignature: true,
             critical: true,
             cRLSign: true,
+            nonRepudiation: true,
+            keyEncipherment: true,
+            dataEncipherment: true
         },
         {
             name: 'subjectKeyIdentifier',
@@ -60,6 +63,10 @@ function buildCACert(keys, options, caCert = null) {
             name: 'extKeyUsage',
             serverAuth: true,
             critical: true,
+            clientAuth: true,
+            codeSigning: true,
+            emailProtection: true,
+            timeStamping: true
         });
     }
 

@@ -277,7 +277,7 @@ function createServerCert(
                 expired ? 'expired ' : ''
             }server certificate was created and signed by ${caCertName}.`,
         };
-        console.error(success.message);
+        console.log(success.message);
         callback(null, success);
     } else {
         const err = {
